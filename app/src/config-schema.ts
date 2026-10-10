@@ -303,6 +303,11 @@ export default {
             default: true,
             title: localized('Message Sent Sound'),
           },
+          useHttpsApi: {
+            type: 'boolean',
+            default: true,
+            title: localized('Send Gmail and Microsoft mail over HTTPS instead of SMTP'),
+          },
           defaultSendType: {
             type: 'string',
             default: 'send',

@@ -5,6 +5,9 @@ import { localized } from '../intl';
 import _ from 'underscore';
 
 import { Task } from './tasks/task';
+import { SendDraftTask } from './tasks/send-draft-task';
+import { DestroyDraftTask } from './tasks/destroy-draft-task';
+import { HttpsSendUnavailableError, httpsProviderFor, sendOverHttps } from './https-send';
 import TaskQueue from './stores/task-queue';
 import { IdentityStore } from './stores/identity-store';
 
@@ -412,7 +415,37 @@ export default class MailsyncBridge {
     task.status = 'local';
     (task as any).origin = new Error().stack.split('\n').slice(2).join('\n');
 
+    // Per-recipient bodies (open / link tracking) need one SMTP envelope per recipient,
+    // which the HTTPS APIs cannot express, so those sends stay in the sync engine.
+    if (task instanceof SendDraftTask && !task.perRecipientBodies) {
+      const account = AccountStore.accountForId(task.accountId);
+      if (account && httpsProviderFor(account)) {
+        this._sendDraftOverHttps(task, account);
+        return;
+      }
+    }
+
     this.sendMessageToAccount(task.accountId, { type: 'queue-task', task: task });
+  }
+
+  async _sendDraftOverHttps(task: SendDraftTask, account: Account) {
+    try {
+      await sendOverHttps(account, task.draft, task.draft.body);
+    } catch (err) {
+      if (err instanceof HttpsSendUnavailableError) {
+        console.warn(`Sending ${account.emailAddress} mail over SMTP: ${err.message}`);
+        this.sendMessageToAccount(task.accountId, { type: 'queue-task', task: task });
+        return;
+      }
+      task.onError({ key: 'send-failed', debuginfo: err.message });
+      return;
+    }
+    // The sync engine removes the draft after an SMTP send; here the provider has already
+    // filed the message in Sent, so only the draft needs to go.
+    task.onSuccess();
+    Actions.queueTask(
+      new DestroyDraftTask({ accountId: task.accountId, messageIds: [task.draft.id] })
+    );
   }
 
   _onQueueTasks(tasks: Task[]) {

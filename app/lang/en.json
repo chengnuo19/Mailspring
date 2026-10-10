@@ -985,5 +985,7 @@
   "then": "then",
   "these instructions": "these instructions",
   "threads": "threads",
-  "week": "week"
+  "week": "week",
+  "Send Gmail and Microsoft mail over HTTPS instead of SMTP": "Send Gmail and Microsoft mail over HTTPS instead of SMTP",
+  "This message is too large to send through Microsoft Graph (about 3 MB with attachments). Remove some attachments and try again.": "This message is too large to send through Microsoft Graph (about 3 MB with attachments). Remove some attachments and try again."
 }

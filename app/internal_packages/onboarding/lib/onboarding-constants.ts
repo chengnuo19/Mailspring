@@ -48,6 +48,7 @@ export const O365_SCOPES = [
   'Contacts.ReadWrite.Shared', // contacts
   'Calendars.ReadWrite', // calendar
   'Calendars.ReadWrite.Shared', // calendar
+  'Mail.Send', // sending over HTTPS via Graph (app/src/flux/https-send.ts)
 
   // Future note: When you exchange the refresh token for an access token, you may
   // request these two OR the above set but NOT BOTH, because Microsoft has mapped
