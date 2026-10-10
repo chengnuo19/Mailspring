@@ -1,0 +1,114 @@
+// Component overrides shared by ui-outlook and ui-outlook-dark. Keep both copies identical;
+// each theme's ui-variables.less supplies the @outlook-* values.
+@import 'ui-variables';
+
+// Toolbar: flat, same surface as the window frame (workspace.less draws a gradient and a hairline).
+.sheet-toolbar {
+  box-shadow: none;
+  border-bottom: none;
+}
+.sheet-toolbar-container,
+body.is-blurred .sheet-toolbar-container {
+  background: @toolbar-background-color;
+}
+
+// Folder pane: rounded neutral selection, plain blue unread counts (outline-view.less).
+.account-sidebar .outline-view {
+  .item {
+    border-radius: @border-radius-base;
+    margin: 1px 6px;
+
+    &:not(.selected):hover {
+      background: @outlook-folder-hover;
+    }
+    &.selected {
+      background: @source-list-active-bg;
+      color: @text-color;
+      font-weight: @font-weight-semi-bold;
+      img.content-mask {
+        background-color: @text-color;
+      }
+    }
+    .item-count-box,
+    .item-count-box.alt-count {
+      background: none;
+      box-shadow: none;
+      color: @accent-primary;
+      font-weight: @font-weight-semi-bold;
+    }
+  }
+}
+
+// Message list: unread rows get Outlook's blue left bar and blue subject.
+.thread-list .list-item.unread:not(.focused):not(.selected) {
+  box-shadow: inset 3px 0 0 @accent-primary;
+  .subject {
+    color: @accent-primary;
+  }
+}
+
+// The bar replaces the unread dot.
+.thread-list-narrow .thread-icon.thread-icon-unread {
+  background-image: none;
+}
+
+// Selection is a light highlight with normal text, undoing the inverted
+// split-mode selection in thread-list.less (.inverseContent).
+.thread-list .list-item.selected,
+.thread-list .list-item.focused,
+.thread-list.handler-split .list-item.selected {
+  background: @list-selected-bg;
+  color: @text-color;
+  border-bottom-color: @list-border;
+  box-shadow: inset 3px 0 0 @accent-primary;
+  -webkit-font-smoothing: auto;
+
+  .thread-icon:not(.thread-icon-unread):not(.thread-icon-star),
+  .draft-icon,
+  .mail-important-icon {
+    filter: @outlook-icon-filter;
+  }
+  .thread-icon-star {
+    filter: none;
+  }
+  .mail-label {
+    filter: none;
+  }
+}
+.thread-list.handler-split .list-item.selected.focused,
+.thread-list .list-item.selected.focused {
+  background: @list-focused-bg;
+}
+body.is-blurred .thread-list.handler-split .list-item.selected {
+  background: @list-selected-bg;
+  color: @text-color;
+  border-bottom-color: @list-border;
+}
+
+.thread-list.handler-split .list-item.selected:hover .list-column-HoverActions .inner {
+  background-image: linear-gradient(
+    to right,
+    fade(@list-selected-bg, 0%) 0%,
+    @list-selected-bg 50%,
+    @list-selected-bg 100%
+  );
+  .action {
+    filter: @outlook-icon-filter;
+  }
+}
+
+// Reading pane: message cards with Outlook's larger corner radius.
+#message-list .message-item-wrap .message-item-white-wrap {
+  border-radius: @border-radius-large;
+}
+
+// Folder chips beside the subject (e.g. 收件箱) are neutral, as in Outlook. Their colors are
+// inline styles set by MailLabel, hence !important.
+.message-subject-wrap .mail-label {
+  background: @outlook-label-bg !important;
+  background-image: none !important;
+  color: @outlook-label-fg !important;
+  box-shadow: none !important;
+  filter: none;
+  border-radius: @border-radius-base;
+}

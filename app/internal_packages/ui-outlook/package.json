@@ -1,0 +1,12 @@
+{
+  "name": "ui-outlook",
+  "displayName": "Outlook",
+  "theme": "ui",
+  "version": "0.1.0",
+  "description": "Light theme modeled on the new Outlook for Windows.",
+  "license": "GPL-3.0",
+  "engines": {
+    "mailspring": "*"
+  },
+  "private": true
+}

@@ -1,0 +1,57 @@
+// Light palette of the new Outlook for Windows (Fluent 2 neutrals, brand blue).
+@import 'base/ui-variables';
+
+// Outlook keeps its brand blue instead of following the system accent color.
+@accent-primary: #0f6cbd;
+@accent-primary-dark: #115ea3;
+
+@font-family-sans-serif: 'Segoe UI Variable Text', 'Segoe UI', 'Microsoft YaHei UI',
+  'Microsoft YaHei', sans-serif;
+
+@border-radius-base: 4px;
+@border-radius-large: 8px;
+
+@background-primary: #ffffff;
+@background-off-primary: #fafafa;
+@background-secondary: #f5f5f5;
+
+@text-color: #242424;
+@text-color-subtle: #616161;
+@text-color-very-subtle: #8a8a8a;
+@text-color-heading: #242424;
+@text-color-link: @accent-primary;
+@text-color-link-hover: @accent-primary-dark;
+@text-color-link-active: @accent-primary-dark;
+
+@border-color-primary: #e0e0e0;
+@border-color-secondary: #e0e0e0;
+@border-color-divider: #e0e0e0;
+
+@component-active-color: @accent-primary;
+@btn-emphasis-bg-color: @accent-primary;
+
+@toolbar-background-color: #f0f0f0;
+@panel-background-color: #f0f0f0;
+
+@source-list-bg: #f0f0f0;
+@source-list-inset-bg: #f0f0f0;
+@source-list-active-bg: #e0e0e0;
+@source-list-active-color: @text-color;
+
+@list-bg: #ffffff;
+@list-border: #f0f0f0;
+@list-hover-bg: #f5f5f5;
+@list-selected-bg: #ebf3fc;
+@list-selected-color: @text-color;
+@list-selected-border: #ebf3fc;
+@list-focused-bg: #cfe4fa;
+@list-focused-color: @text-color;
+@list-focused-border: #cfe4fa;
+
+// Variables used only by outlook-components.less
+@outlook-frame: #f0f0f0;
+@outlook-folder-hover: #e8e8e8;
+@outlook-label-bg: #f0f0f0;
+@outlook-label-fg: #424242;
+// Thread list icons are dark artwork; the dark variant inverts them.
+@outlook-icon-filter: none;

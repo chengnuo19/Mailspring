@@ -1,0 +1,118 @@
+// Dark palette of the new Outlook for Windows, built on the rules of ui-dark.
+@import 'base/ui-variables';
+
+@gray-base: #ffffff;
+@gray-darker: darken(@gray-base, 13.5%);
+@gray-dark: darken(@gray-base, 20%);
+@gray: darken(@gray-base, 33.5%);
+@gray-light: darken(@gray-base, 46.7%);
+@gray-lighter: darken(@gray-base, 92.5%);
+@white: #0a0a0a;
+
+// Outlook keeps its brand blue instead of following the system accent color.
+@accent-primary: #479ef5;
+@accent-primary-dark: #62abf5;
+
+@font-family-sans-serif: 'Segoe UI Variable Text', 'Segoe UI', 'Microsoft YaHei UI',
+  'Microsoft YaHei', sans-serif;
+
+@border-radius-base: 4px;
+@border-radius-large: 8px;
+
+@background-primary: #292929;
+@background-off-primary: #292929;
+@background-secondary: #1f1f1f;
+@background-tertiary: #6d7987;
+
+@border-color-primary: #3d3d3d;
+@border-color-secondary: #3d3d3d;
+@border-color-tertiary: lighten(@background-tertiary, 10%);
+@border-color-divider: #3d3d3d;
+
+@text-color: #d6d6d6;
+@text-color-subtle: #adadad;
+@text-color-very-subtle: fadeout(#adadad, 30%);
+@text-color-inverse: white;
+@text-color-inverse-subtle: fadeout(@text-color-inverse, 20%);
+@text-color-inverse-very-subtle: fadeout(@text-color-inverse, 50%);
+@text-color-heading: #ffffff;
+@component-active-bg: @text-color;
+@component-active-color: @accent-primary;
+
+@text-color-link: @accent-primary;
+@text-color-link-hover: @accent-primary-dark;
+@text-color-link-active: @accent-primary-dark;
+
+@btn-default-bg-color: lighten(@background-primary, 5%);
+@btn-border-color: fadeout(@text-color, 65%);
+@btn-emphasis-bg-color: #0f6cbd;
+@dropdown-default-bg-color: #333333;
+
+@input-bg: #2e2e2e;
+@input-border: @border-color-divider;
+
+@toolbar-background-color: #1f1f1f;
+@panel-background-color: #1f1f1f;
+
+@source-list-bg: #1f1f1f;
+@source-list-inset-bg: #1f1f1f;
+@source-list-active-bg: #3d3d3d;
+@source-list-active-color: #ffffff;
+
+@list-bg: #292929;
+@list-border: #333333;
+@list-hover-bg: #333333;
+@list-selected-bg: #383838;
+@list-selected-color: #ffffff;
+@list-selected-border: #383838;
+@list-focused-bg: #3d3d3d;
+@list-focused-color: #ffffff;
+@list-focused-border: #3d3d3d;
+
+// Variables used only by outlook-components.less
+@outlook-frame: #1f1f1f;
+@outlook-folder-hover: #2e2e2e;
+@outlook-label-bg: #3d3d3d;
+@outlook-label-fg: #d6d6d6;
+// Thread list icons are dark artwork, inverted to read on dark surfaces.
+@outlook-icon-filter: invert(100%);
+
+// Rules carried over from ui-dark: invert dark artwork for dark surfaces.
+.thread-icon:not(.thread-icon-unread):not(.thread-icon-star) {
+  filter: invert(100%);
+}
+img.content-dark {
+  filter: invert(100%);
+}
+img.content-light {
+  filter: invert(100%);
+}
+
+.mail-label {
+  filter: contrast(110%) brightness(85%);
+}
+
+#message-list .message-item-wrap .message-item-white-wrap {
+  box-shadow: 0 0 0.5px rgba(255, 255, 255, 0.28), 0 1px 1.5px rgba(255, 255, 255, 0.08);
+}
+
+.thread-list .list-item:not(.unread):not(.selected):not(.focused) {
+  color: #adadad;
+}
+
+.thread-list .list-item.thread-list-reminder-item {
+  background-color: #312856;
+
+  &.unread {
+    background-color: #312856;
+    &:not(.focused):not(.selected) {
+      background-color: #312856;
+    }
+  }
+}
+
+.send-reminders-header {
+  color: #7d5bef;
+  background: #312856;
+  border-bottom: 1px solid #4d3b8a;
+}

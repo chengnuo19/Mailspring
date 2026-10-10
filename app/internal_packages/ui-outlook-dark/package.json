@@ -1,0 +1,12 @@
+{
+  "name": "ui-outlook-dark",
+  "displayName": "Outlook Dark",
+  "theme": "ui",
+  "version": "0.1.0",
+  "description": "Dark theme modeled on the new Outlook for Windows.",
+  "license": "GPL-3.0",
+  "engines": {
+    "mailspring": "*"
+  },
+  "private": true
+}
