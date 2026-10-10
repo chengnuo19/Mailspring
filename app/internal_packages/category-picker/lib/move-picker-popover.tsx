@@ -97,7 +97,7 @@ export default class MovePickerPopover extends Component<
           // remove categories that are part of the current perspective or locked
           !hidden.includes(cat.role) && !currentCategoryIds.includes(cat.id)
       )
-      .filter((cat) => searchRe.test(cat.displayName))
+      .filter((cat) => searchRe.test(cat.localizedName) || searchRe.test(cat.displayName))
       .map((cat) => {
         if (cat.divider) {
           return cat;
@@ -105,7 +105,7 @@ export default class MovePickerPopover extends Component<
         return {
           id: cat.id,
           category: cat,
-          displayName: cat.displayName,
+          displayName: cat.localizedName,
           backgroundColor: LabelColorizer.backgroundColorDark(cat),
         };
       });

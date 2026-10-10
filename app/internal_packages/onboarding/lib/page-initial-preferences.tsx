@@ -67,24 +67,12 @@ class InitialPreferencesOptions extends React.Component<
 
     const templateWithBasename = (name: string) => templates.find((t) => t.indexOf(name) === 0);
 
-    if (this.props.account.provider === 'gmail') {
-      this.props.config.set('core.workspace.mode', 'list');
-      this.props.config.set('core.keymapTemplate', templateWithBasename('Gmail'));
-    } else if (
-      this.props.account.provider === 'eas' ||
-      this.props.account.provider === 'office365' ||
-      this.props.account.provider === 'outlook'
-    ) {
-      this.props.config.set('core.workspace.mode', 'split');
-      this.props.config.set('core.keymapTemplate', templateWithBasename('Outlook'));
-    } else {
-      this.props.config.set('core.workspace.mode', 'split');
-      if (process.platform === 'darwin') {
-        this.props.config.set('core.keymapTemplate', templateWithBasename('Apple Mail'));
-      } else {
-        this.props.config.set('core.keymapTemplate', templateWithBasename('Outlook'));
-      }
-    }
+    // Outlook's layout and shortcuts for every provider; macOS keeps its platform-native keys.
+    this.props.config.set('core.workspace.mode', 'split');
+    this.props.config.set(
+      'core.keymapTemplate',
+      templateWithBasename(process.platform === 'darwin' ? 'Apple Mail' : 'Outlook')
+    );
   };
 
   render() {

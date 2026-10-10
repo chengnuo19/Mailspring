@@ -107,7 +107,7 @@ export class ChangeFolderTask extends ChangeMailTask {
 
   label() {
     if (this.folder) {
-      return `Moving to ${this.folder.displayName}`;
+      return `Moving to ${this.folder.localizedName}`;
     }
     return localized('Moving to folder');
   }
@@ -123,23 +123,23 @@ export class ChangeFolderTask extends ChangeMailTask {
         ? localized(
             `Moved %@ threads from %@ to %@`,
             this.threadIds.length,
-            source.displayName,
-            this.folder.displayName
+            source.localizedName,
+            this.folder.localizedName
           )
-        : localized(`Moved %@ threads to %@`, this.threadIds.length, this.folder.displayName);
+        : localized(`Moved %@ threads to %@`, this.threadIds.length, this.folder.localizedName);
     } else if (this.messageIds.length > 1) {
       return source
         ? localized(
             `Moved %@ messages from %@ to %@`,
             this.messageIds.length,
-            source.displayName,
-            this.folder.displayName
+            source.localizedName,
+            this.folder.localizedName
           )
-        : localized(`Moved %@ messages to %@`, this.messageIds.length, this.folder.displayName);
+        : localized(`Moved %@ messages to %@`, this.messageIds.length, this.folder.localizedName);
     }
     return source
-      ? localized(`Moved from %@ to %@`, source.displayName, this.folder.displayName)
-      : localized(`Moved to %@`, this.folder.displayName);
+      ? localized(`Moved from %@ to %@`, source.localizedName, this.folder.localizedName)
+      : localized(`Moved to %@`, this.folder.localizedName);
   }
 
   willBeQueued() {

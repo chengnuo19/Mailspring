@@ -388,42 +388,26 @@ const DateUtils = {
    * @param {Date} datetime - Timestamp
    * @return {String} Formated date/time
    *
-   * The returned date/time format depends on how long ago the timestamp is.
+   * Follows the Outlook message list: the time for today, "Fri 9/25" (zh-CN "周五 9/25")
+   * for the last month, and a numeric date with the year ("2026/7/26") before that.
    */
   shortTimeString(datetime: Date) {
     const now = moment();
-    const diff = now.diff(datetime, 'days', true);
-    const isSameDay = now.isSame(datetime, 'days');
-    const opts: Intl.DateTimeFormatOptions = {
-      hourCycle: AppEnv.config.get('core.workspace.use24HourClock') ? 'h23' : 'h12',
-    };
+    const lang = navigator.language;
 
-    if (diff <= 1 && isSameDay) {
-      // Time if less than 1 day old
-      opts.hour = 'numeric';
-      opts.minute = '2-digit';
-    } else if (diff < 5 && !isSameDay) {
-      // Weekday with time if up to 2 days ago
-      //opts.month = 'short';
-      //opts.day = 'numeric';
-      opts.weekday = 'short';
-      opts.hour = 'numeric';
-      opts.minute = '2-digit';
-    } else {
-      if (diff < 365) {
-        // Month and day up to 1 year old
-        opts.month = 'short';
-        opts.day = 'numeric';
-      } else {
-        // Month, day and year if over a year old
-        opts.year = 'numeric';
-        opts.month = 'short';
-        opts.day = 'numeric';
-      }
-      return datetime.toLocaleDateString(navigator.language, opts);
+    if (now.isSame(datetime, 'days')) {
+      return datetime.toLocaleTimeString(lang, {
+        hourCycle: AppEnv.config.get('core.workspace.use24HourClock') ? 'h23' : 'h12',
+        hour: 'numeric',
+        minute: '2-digit',
+      });
     }
-
-    return datetime.toLocaleTimeString(navigator.language, opts);
+    if (now.diff(datetime, 'days', true) <= 31) {
+      const weekday = datetime.toLocaleDateString(lang, { weekday: 'short' });
+      const monthDay = datetime.toLocaleDateString(lang, { month: 'numeric', day: 'numeric' });
+      return `${weekday} ${monthDay}`;
+    }
+    return datetime.toLocaleDateString(lang, { year: 'numeric', month: 'numeric', day: 'numeric' });
   },
 
   /**

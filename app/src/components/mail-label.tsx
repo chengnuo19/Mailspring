@@ -6,6 +6,7 @@ type MailLabelProps = {
   label: {
     id?: string;
     displayName: React.ReactElement | string;
+    localizedName?: string;
     isLockedCategory: () => boolean;
     hue: () => number;
   };
@@ -42,7 +43,7 @@ export const MailLabel: React.FC<MailLabelProps> = React.memo(
   ({ label, onRemove }) => {
     const removable = onRemove && !label.isLockedCategory();
     let classname = 'mail-label';
-    let content: JSX.Element | string = label.displayName;
+    let content: JSX.Element | string = label.localizedName || label.displayName;
 
     let x: JSX.Element | null = null;
     if (removable) {

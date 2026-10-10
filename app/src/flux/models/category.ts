@@ -91,6 +91,15 @@ export class Category extends Model {
     return decoded;
   }
 
+  /**
+   * The name to show in the interface: standard folders (Inbox, Sent, Trash…) use the
+   * interface language, everything else uses `displayName`. Code that matches or stores
+   * folder names (mail rules, renaming, search syntax) must keep using `displayName`.
+   */
+  get localizedName(): string {
+    return (this.role && LocalizedStringForRole[this.role]) || this.displayName;
+  }
+
   /* Available for historical reasons, do not use. */
   get name() {
     return this.role;

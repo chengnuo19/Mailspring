@@ -39,7 +39,7 @@ export default {
         properties: {
           mode: {
             type: 'string',
-            default: 'list',
+            default: 'split',
             enum: ['split', 'list', 'splitVertical'],
           },
           systemTray: {
@@ -107,7 +107,7 @@ export default {
       },
       keymapTemplate: {
         type: 'string',
-        default: 'Gmail',
+        default: 'Outlook',
       },
       attachments: {
         type: 'object',

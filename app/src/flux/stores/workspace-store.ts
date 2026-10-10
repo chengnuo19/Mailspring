@@ -108,7 +108,13 @@ class WorkspaceStore extends MailspringStore {
     this.Location = Location = {};
     this.Sheet = Sheet = {} as SheetSet;
 
-    this._hiddenLocations = AppEnv.config.get('core.workspace.hiddenLocations') || {};
+    // Outlook has no contact sidebar, so it starts hidden until the user toggles it.
+    this._hiddenLocations = AppEnv.config.get('core.workspace.hiddenLocations') ?? {
+      MessageListSidebar: {
+        id: 'MessageListSidebar',
+        Toolbar: { id: 'MessageListSidebar:Toolbar' },
+      },
+    };
     this._sheetStack = [];
 
     if (AppEnv.isMainWindow()) {

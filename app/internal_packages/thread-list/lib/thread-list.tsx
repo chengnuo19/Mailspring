@@ -25,6 +25,7 @@ import {
   FolderSyncProgressStore,
   Thread,
   TaskFactory,
+  WorkspaceStore,
   localized,
 } from 'mailspring-exports';
 
@@ -258,7 +259,9 @@ class ThreadList extends React.Component<
       540
     );
     const current = this.state.style;
+    // Next to a reading pane the list keeps Outlook's multi-line rows at any width.
     const desired =
+      WorkspaceStore.layoutMode() === 'split' ||
       (ReactDOM.findDOMNode(this) as HTMLElement).offsetWidth < narrowStyleWidth
         ? 'narrow'
         : 'wide';
