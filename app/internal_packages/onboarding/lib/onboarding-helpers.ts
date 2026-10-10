@@ -435,7 +435,17 @@ export async function finalizeAndValidateAccount(account: Account) {
   const proc = new MailsyncProcess(AppEnv.getLoadSettings());
   proc.identity = IdentityStore.identity();
   proc.account = account;
-  await proc.test();
+  try {
+    await proc.test();
+  } catch (err) {
+    // mailsync tests IMAP before SMTP, so an SMTP-tagged failure means IMAP already passed.
+    // Opt-in for development on networks that block outbound SMTP ports; sending will fail.
+    const skipSmtpCheck = AppEnv.inDevMode() && process.env.MAILSPRING_DEV_SKIP_SMTP_CHECK === '1';
+    if (!(skipSmtpCheck && err.errorService === 'smtp')) {
+      throw err;
+    }
+    console.warn(`Ignoring SMTP verification failure in dev mode: ${err.message}`);
+  }
 
   // Record the date of successful auth
   account.authedAt = new Date();

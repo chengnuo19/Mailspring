@@ -131,7 +131,11 @@ export class MailsyncProcess extends EventEmitter {
     this.verbose = verbose;
     this.resourcePath = resourcePath;
     this.configDirPath = configDirPath;
-    this.binaryPath = path.join(resourcePath, 'mailsync').replace('app.asar', 'app.asar.unpacked');
+    // Release builds of mailsync exit with code 2 unless their own path contains "mailspring",
+    // so a working copy checked out under another folder name can point this at a junction.
+    this.binaryPath =
+      process.env.MAILSYNC_BINARY_PATH ||
+      path.join(resourcePath, 'mailsync').replace('app.asar', 'app.asar.unpacked');
   }
 
   _showStatusWindow(mode) {

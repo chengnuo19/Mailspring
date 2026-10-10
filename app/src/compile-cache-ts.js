@@ -39,7 +39,13 @@ function writeCachedJavascript(relativeCachePath, code) {
   const cachePath = path.join(cacheDirectory, relativeCachePath);
   fs.mkdirSync(path.dirname(cacheTmpPath), { recursive: true });
   fs.writeFileSync(cacheTmpPath, code, 'utf8');
-  fs.renameSync(cacheTmpPath, cachePath);
+  try {
+    fs.renameSync(cacheTmpPath, cachePath);
+  } catch (error) {
+    // On Windows the rename fails with EPERM while another window has the same cache entry
+    // open. The cache is only an optimization and the caller already holds the compiled code.
+    fs.rmSync(cacheTmpPath, { force: true });
+  }
 }
 
 function addSourceURL(jsCode, filePath) {
